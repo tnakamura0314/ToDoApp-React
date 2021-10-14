@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./styles.css";
 
 export const App = () => {
+  const [todoText, setTodoText] = useState("");
+
   const [incompleteTodos, setIncompleteTodos] = useState([
     "あああああ",
     "いいいいい"
@@ -9,11 +11,33 @@ export const App = () => {
 
   const [completeTodos, setCompleteTodos] = useState(["ううううう"]);
 
+  //inputの入力欄にonChange={onChangeTodoText}で値を取得し、setTodoTextで、value={todoText}に値をセットする
+  //これはinputの時に使うもので定型分的な感じだから覚える
+  const onChangeTodoText = (event) => setTodoText(event.target.value);
+
+  const onClickAdd = () => {
+    //入力欄を空で追加ボタンを押した場合、投稿できないようにする
+    if (todoText === "") return;
+
+    //　...incompleteTodos現在の要素数を取得して、今入力された新しい要素をtodoTextで配列に追加
+    const newTodos = [...incompleteTodos, todoText];
+
+    //タスクの追加
+    setIncompleteTodos(newTodos);
+
+    //タスク追加後に、入力欄の入力内容を削除する
+    setTodoText("");
+  };
+
   return (
     <>
       <div className="input-area">
-        <input placeholder="TODOを入力" />
-        <button>追加</button>
+        <input
+          placeholder="TODOを入力"
+          value={todoText}
+          onChange={onChangeTodoText}
+        />
+        <button onClick={onClickAdd}>追加</button>
       </div>
       <div className="incomplete-area">
         <p className="title">未完了のTODO</p>
