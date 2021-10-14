@@ -6,18 +6,18 @@ export const App = () => {
   const [todoText, setTodoText] = useState("");
 
   //未完了リストに追加するuseState
-  const [incompleteTodos, setIncompleteTodos] = useState([
-    "あああああ",
-    "いいいいい"
-  ]);
+  const [incompleteTodos, setIncompleteTodos] = useState([]);
 
   //完了リストに追加するuseState
-  const [completeTodos, setCompleteTodos] = useState(["ううううう"]);
+  const [completeTodos, setCompleteTodos] = useState([]);
 
   //inputの入力欄にonChange={onChangeTodoText}で値を取得し、setTodoTextで、value={todoText}に値をセットする
   //これはinputの時に使うもので定型分的な感じだから覚える
   const onChangeTodoText = (event) => setTodoText(event.target.value);
 
+  /**
+   * 追加ボタン
+   */
   const onClickAdd = () => {
     //入力欄を空で追加ボタンを押した場合、投稿できないようにする
     if (todoText === "") return;
@@ -32,6 +32,9 @@ export const App = () => {
     setTodoText("");
   };
 
+  /**
+   * 　削除ボタン
+   */
   const onClickDelete = (index) => {
     const newTodos = [...incompleteTodos];
 
@@ -53,6 +56,22 @@ export const App = () => {
     //未完了と完了リストを更新！！
     setIncompleteTodos(newIncompleteTodos);
     setCompleteTodos(newCompleteTodos);
+  };
+
+  /**
+   * 　戻すボタン
+   */
+  const onClickBack = (index) => {
+    //完了から削除
+    const newCompleteTodos = [...completeTodos];
+    newCompleteTodos.splice(index, 1);
+
+    //未完了に追加
+    const newIncompleteTodos = [...incompleteTodos, completeTodos[index]];
+
+    //未完了と完了リストの更新
+    setCompleteTodos(newCompleteTodos);
+    setIncompleteTodos(newIncompleteTodos);
   };
 
   return (
@@ -85,12 +104,17 @@ export const App = () => {
       <div className="complete-area">
         <p className="title">完了のTODO</p>
         <ul id="complete-list">
-          {completeTodos.map((todo) => {
+          {completeTodos.map((todo, index) => {
             return (
               <li key={todo}>
                 <div className="list-row">
                   <p>{todo}</p>
-                  <button className="back-button">戻す</button>
+                  <button
+                    className="back-button"
+                    onClick={() => onClickBack(index)}
+                  >
+                    戻す
+                  </button>
                 </div>
               </li>
             );
