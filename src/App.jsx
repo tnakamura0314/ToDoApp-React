@@ -4,15 +4,15 @@ import "./styles.css";
 export const App = () => {
   return (
     <>
-      <div>
+      <div className="input-area">
         <input placeholder="TODOを入力" />
         <button>追加</button>
       </div>
-      <div>
-        <p>未完了のTODO</p>
-        <ul>
+      <div className="incomplete-area">
+        <p className="title">未完了のTODO</p>
+        <ul id="incomplete-list">
           <li>
-            <div>
+            <div className="list-row">
               <p>TODO1</p>
               <button>完了</button>
               <button>削除</button>
@@ -27,13 +27,13 @@ export const App = () => {
           </li>
         </ul>
       </div>
-      <div>
-        <p>完了のTODO</p>
-        <ul>
+      <div className="complete-area">
+        <p className="title">完了のTODO</p>
+        <ul id="complete-list">
           <li>
-            <div>
+            <div className="list-row">
               <p>TODOだったよ</p>
-              <button>戻す</button>
+              <button className="back-button">戻す</button>
             </div>
           </li>
         </ul>
