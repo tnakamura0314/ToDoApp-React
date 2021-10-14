@@ -84,7 +84,14 @@ export const App = () => {
         todoText={todoText}
         onChange={onChangeTodoText}
         onClick={onClickAdd}
+        //未完了リストの項目が5以上の時、trueを返して、これ以上入力できないようにする
+        disabled={incompleteTodos.length >= 5}
       />
+
+      {/* 未完了リストの項目が5以上の場合にこのメッセージを表示する */}
+      {incompleteTodos.length >= 5 && (
+        <p style={{ color: "red" }}>登録できるTODOは5個まで！消化しなさい！</p>
+      )}
 
       <InCompleteTodos
         todos={incompleteTodos}
